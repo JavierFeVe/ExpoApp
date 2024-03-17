@@ -1,13 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-        <Text style={styles.text}>
-          Hola mamá!
-        </Text>
-      <StatusBar style="auto" />
+        <View style={styles.box}>
+          <Text style={styles.boxText}>
+            Saikoneta
+          </Text>
+        </View>
     </View>
   );
 }
@@ -15,11 +15,23 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "ghostwhite",
+    ...Platform.select({
+      ios: { paddingTop: 20 },
+      android: { paddingTop: StatusBar.currentHeight },
+    }),
   },
-  text: {
+  boxText: {
+    color:"darkslategray",
     fontWeight: "bold",
   },
+  box:{
+    width:100,
+    height: 100,
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor:"lightgray",
+  }
 });
