@@ -1,37 +1,34 @@
-import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
+import * as React from "react";
+import { Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./screens/Home";
+import Details from "./screens/Details";
+import { Button } from "react-native-web";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-        <View style={styles.box}>
-          <Text style={styles.boxText}>
-            Saikoneta
-          </Text>
-        </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen
+          name="Details"
+          component={Details}
+          options={({ route }) => ({
+            headerRight: () => {
+              return (
+                <Button
+                  title="Buy"
+                  onPress={() => {}}
+                  disabled={route.params.stock === 0}
+                />
+              );
+            },
+          })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "ghostwhite",
-    ...Platform.select({
-      ios: { paddingTop: 20 },
-      android: { paddingTop: StatusBar.currentHeight },
-    }),
-  },
-  boxText: {
-    color:"darkslategray",
-    fontWeight: "bold",
-  },
-  box:{
-    width:100,
-    height: 100,
-    justifyContent:"center",
-    alignItems:"center",
-    backgroundColor:"lightgray",
-  }
-});
