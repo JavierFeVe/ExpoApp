@@ -1,4 +1,4 @@
-import { Button } from "react-native";
+import { Button,View,Text,FlatList} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator} from "@react-navigation/drawer";
 import { createBottomTabNavigator} from "@react-navigation/bottom-tabs";
@@ -6,27 +6,20 @@ import {Platform} from "react-native";
 import Home from "./pages/Home";
 import News from "./pages/News";
 import Settings from "./pages/Settings";
+import styles from "./styles";
 
-const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
+const data = new Array(100)
+  .fill(null)
+  .map((v,i) => ({key: i.toString(),value: `Item ${i}`
+  }));
 
 export default function App() {
   return (
-    <NavigationContainer>
-      {Platform.OS === "ios" && (
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={Home}/>
-          <Tab.Screen name="News" component={News}/>
-          <Tab.Screen name="Settings" component={Settings}/>
-        </Tab.Navigator>
-      )}
-      {Platform.OS === "android" && (
-        <Drawer.Navigator>
-          <Drawer.Screen name="Home" component={Home}/>
-          <Drawer.Screen name="News" component={News}/>
-          <Drawer.Screen name="Settings" component={Settings}/>
-        </Drawer.Navigator>
-      )}
-    </NavigationContainer>
+    <View style={styles.container}>
+      <FlatList
+      data={data}
+      renderItem={({item}) => <Text style={styles.item}>{item.value}</Text>}
+      />
+    </View>
   );
 }
